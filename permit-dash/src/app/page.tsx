@@ -1,17 +1,38 @@
 import Link from 'next/link'
 
-const workflowSteps = [
+const howItWorksSteps = [
   {
-    title: 'Ingest and enrich',
-    copy: 'Permit data lands every morning, normalized and tagged for trade, scope, and value.',
+    step: '01',
+    title: 'We monitor permits',
+    copy: 'Fresh permits are tracked every morning so you never miss a new opportunity.',
   },
   {
-    title: 'Filter and prioritize',
-    copy: 'Dial in the exact work class you want and surface only the leads that matter.',
+    step: '02',
+    title: 'You get instant alerts',
+    copy: 'Get a clean feed of jobs that match your trade, budget, and location.',
   },
   {
-    title: 'Act immediately',
-    copy: 'Call contractors directly, reference the city portal, and stay first in line.',
+    step: '03',
+    title: 'You win the bid',
+    copy: 'Reach contractors fast with verified contact details and clear scope notes.',
+  },
+]
+
+const featureCards = [
+  {
+    icon: 'T',
+    title: 'Time saved',
+    copy: 'Skip spreadsheets and focus on the leads that are ready to close today.',
+  },
+  {
+    icon: 'V',
+    title: 'Verified data',
+    copy: 'Every permit is checked and organized for fast, confident outreach.',
+  },
+  {
+    icon: 'C',
+    title: 'Direct contact info',
+    copy: 'Call or email contractors in one click and move before competitors.',
   },
 ]
 
@@ -33,13 +54,21 @@ export default function LandingPage() {
         />
 
         <header className="relative z-10 px-6 py-8 sm:px-8">
-          <div className="mx-auto flex max-w-6xl items-center justify-between">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white shadow-sm">
                 SL
               </div>
               <span className="text-lg font-semibold tracking-tight text-slate-900">ScoutLead</span>
             </div>
+            <nav className="hidden items-center gap-6 text-sm font-semibold text-slate-600 md:flex">
+              <a className="transition-all duration-300 ease-in-out hover:text-slate-900" href="#how-it-works">
+                How it works
+              </a>
+              <a className="transition-all duration-300 ease-in-out hover:text-slate-900" href="#features">
+                Features
+              </a>
+            </nav>
             <Link
               href="/login"
               className="inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-indigo-500 hover:shadow-lg active:scale-95"
@@ -49,7 +78,7 @@ export default function LandingPage() {
           </div>
         </header>
 
-        <section className="relative z-10 px-6 pb-20 pt-6 sm:px-8">
+        <section className="relative z-10 px-6 pb-16 pt-6 sm:px-8">
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-8">
               <div className="space-y-5">
@@ -63,8 +92,8 @@ export default function LandingPage() {
                   Delivered before the competition.
                 </h1>
                 <p className="text-base leading-relaxed text-slate-600 sm:text-lg animate-fade-in-up animate-fade-in-up-delay-2">
-                  ScoutLead transforms raw municipal permits into a live, prioritized feed. Filter by
-                  trade, capture contractor details, and stay ahead with clean, RLS-secured data.
+                  ScoutLead turns city permits into a live, prioritized feed. Filter by trade, capture
+                  contractor details, and move faster with verified data.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-4 animate-fade-in-up animate-fade-in-up-delay-3">
@@ -75,7 +104,7 @@ export default function LandingPage() {
                   Get the magic link
                 </Link>
                 <a
-                  href="#features"
+                  href="#how-it-works"
                   className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/80 px-6 py-3 text-sm font-semibold text-slate-700 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-white hover:shadow-lg"
                 >
                   See how it works
@@ -93,9 +122,9 @@ export default function LandingPage() {
                   <p className="text-sm text-slate-600">Next up: Houston, Dallas</p>
                 </div>
                 <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Security</p>
-                  <p className="mt-2 text-2xl font-semibold text-slate-900">RLS</p>
-                  <p className="text-sm text-slate-600">Server-first access control</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Data quality</p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-900">Verified</p>
+                  <p className="text-sm text-slate-600">Trusted city sources</p>
                 </div>
               </div>
             </div>
@@ -118,7 +147,7 @@ export default function LandingPage() {
                     <span className="text-emerald-600">Issued today</span>
                   </div>
                   <p className="mt-3 text-sm font-semibold text-slate-900">New build, 5,400 sqft addition</p>
-                  <p className="mt-1 text-xs text-slate-500">Electrical + HVAC, $1.2M est.</p>
+                  <p className="mt-1 text-xs text-slate-500">Electrical and HVAC, $1.2M est.</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-2xl border border-slate-200/70 bg-white p-4">
@@ -127,9 +156,9 @@ export default function LandingPage() {
                     <p className="text-xs text-slate-500">Faster than spreadsheets</p>
                   </div>
                   <div className="rounded-2xl border border-slate-200/70 bg-white p-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Verified</p>
-                    <p className="mt-2 text-xl font-semibold text-slate-900">RLS</p>
-                    <p className="text-xs text-slate-500">Always enforced</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Trusted data</p>
+                    <p className="mt-2 text-xl font-semibold text-slate-900">Daily</p>
+                    <p className="text-xs text-slate-500">Updated every morning</p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-slate-900 px-5 py-4 text-white">
@@ -141,14 +170,50 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section id="how-it-works" className="relative z-10 px-6 pb-20 sm:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 max-w-2xl space-y-3 animate-fade-in-up">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">How it works</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                From permit to pipeline in three steps.
+              </h2>
+              <p className="text-sm text-slate-600 sm:text-base">
+                Everything is delivered in plain language, organized for quick calls and fast decisions.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {howItWorksSteps.map((step) => (
+                <div
+                  key={step.title}
+                  className="group rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-lg shadow-slate-200/40 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600/10 text-sm font-semibold text-indigo-600 transition-transform duration-300 group-hover:scale-110">
+                      {step.step}
+                    </span>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      Step {step.step}
+                    </p>
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold text-slate-900">{step.title}</h3>
+                  <p className="mt-3 text-sm text-slate-600">{step.copy}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="features" className="relative z-10 px-6 pb-24 sm:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Workflow</p>
-                <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
-                  Built for decisive sales teams.
+              <div className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Features</p>
+                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                  Built for busy contractors.
                 </h2>
+                <p className="text-sm text-slate-600 sm:text-base">
+                  Focus on the jobs that fit your crew and close faster with clean, actionable data.
+                </p>
               </div>
               <Link
                 href="/login"
@@ -158,15 +223,40 @@ export default function LandingPage() {
               </Link>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
-              {workflowSteps.map((item) => (
+              {featureCards.map((feature) => (
                 <div
-                  key={item.title}
-                  className="rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-lg shadow-slate-200/40 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl"
+                  key={feature.title}
+                  className="group rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-lg shadow-slate-200/40 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-3 text-sm text-slate-600">{item.copy}</p>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white transition-transform duration-300 group-hover:scale-110">
+                    {feature.icon}
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-slate-900">{feature.title}</h3>
+                  <p className="mt-3 text-sm text-slate-600">{feature.copy}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="cta" className="relative z-10 px-6 pb-24 sm:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col gap-8 rounded-3xl border border-slate-200/70 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-10 text-white shadow-xl sm:p-12 md:flex-row md:items-center md:justify-between">
+              <div className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Ready to move faster</p>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Win more bids with a live permit feed.
+                </h2>
+                <p className="text-sm text-white/70 sm:text-base">
+                  Get your magic link and start receiving the best leads in your market today.
+                </p>
+              </div>
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-slate-100 hover:shadow-lg active:scale-95"
+              >
+                Get started
+              </Link>
             </div>
           </div>
         </section>
