@@ -1,6 +1,8 @@
-import { supabase } from '../lib/supabase'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import PaginationControls from './PaginationControls'
 import PermitCardGrid from './PermitCardGrid'
 import TradeFilter from './TradeFilter'
@@ -20,6 +22,34 @@ const parsePositiveInt = (value?: string) => {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null
 }
 
+const createSupabaseServerClient = async () => {
+  const cookieStore = await cookies()
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set({ name, value, ...options })
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.set({ name, value: '', ...options })
+        },
+      },
+    }
+  )
+}
+
+async function signOut() {
+  'use server'
+  const supabase = await createSupabaseServerClient()
+  await supabase.auth.signOut()
+  redirect('/')
+}
+
 
 // Next.js passes URL parameters into this component
 export default async function Home({
@@ -30,6 +60,10 @@ export default async function Home({
   const resolvedSearchParams = await searchParams;
   const selectedTrade = resolvedSearchParams.trade || 'All';
   const currentPage = parsePositiveInt(resolvedSearchParams.page) ?? 1
+
+  const supabase = await createSupabaseServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const isAuthenticated = Boolean(user)
 
   // 1. Start building the database query
   let query = supabase
@@ -71,9 +105,28 @@ export default async function Home({
               <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Live Permit Leads</h1>
               <p className="text-zinc-500 mt-1">Displaying the newest approved construction jobs in Austin.</p>
             </div>
-            <div className="bg-zinc-100/80 text-zinc-700 px-4 py-2 rounded-lg font-medium flex items-center border border-zinc-200/60">
-              <MapPin className="w-4 h-4 mr-2" />
-              Austin, TX
+            <div className="flex items-center gap-3">
+              <div className="bg-zinc-100/80 text-zinc-700 px-4 py-2 rounded-lg font-medium flex items-center border border-zinc-200/60">
+                <MapPin className="w-4 h-4 mr-2" />
+                Austin, TX
+              </div>
+              {isAuthenticated ? (
+                <form action={signOut}>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2 transition-all duration-200 active:scale-95"
+                  >
+                    Sign Out
+                  </button>
+                </form>
+              ) : (
+                <Link
+                  href="/login"
+                  className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2 transition-all duration-200 active:scale-95"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
 
