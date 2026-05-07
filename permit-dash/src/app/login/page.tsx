@@ -1,78 +1,79 @@
-'use client'
-
-import { createBrowserClient } from '@supabase/ssr'
-import { useState } from 'react'
 import Link from 'next/link'
+import LoginForm from './LoginForm'
+import { sendMagicLinkAction } from './actions'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
-
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage('')
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      setMessage(`Error: ${error.message}`)
-    } else {
-      setMessage('Check your email for the magic link!')
-    }
-    setLoading(false)
-  }
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 bg-gray-50">
-      <div className="w-full max-w-md space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to ScoutLead
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            No passwords. Just a magic link to your inbox.
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <input
-            type="email"
-            required
-            className="block w-full rounded-md border-0 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-600 sm:text-sm"
-            placeholder="you@company.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+    <main className="min-h-screen bg-slate-50">
+      <div className="grid min-h-screen lg:grid-cols-[1.05fr_0.95fr]">
+        <section className="flex items-center justify-center px-6 py-12 sm:px-8 lg:bg-white">
+          <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 sm:p-10 lg:border-0 lg:shadow-none">
+            <div className="mb-8 space-y-3">
+              <Link href="/" className="inline-flex items-center gap-3 transition-opacity duration-300 hover:opacity-80">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white shadow-sm">
+                  SL
+                </div>
+                <span className="text-lg font-semibold tracking-tight text-slate-900">ScoutLead</span>
+              </Link>
+              <div className="space-y-2">
+                <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Sign in to ScoutLead</h1>
+                <p className="text-sm leading-relaxed text-slate-600">
+                  No passwords. Just a polished magic link straight to your inbox.
+                </p>
+              </div>
+            </div>
+
+            <LoginForm action={sendMagicLinkAction} />
+          </div>
+        </section>
+
+        <aside className="relative hidden overflow-hidden bg-gradient-to-br from-indigo-900 via-slate-950 to-slate-900 lg:flex lg:items-center lg:justify-center lg:px-10">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25"
           />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-md bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50"
-          >
-            {loading ? 'Sending...' : 'Send Magic Link'}
-          </button>
-          {message && (
-            <p className={`text-center text-sm font-medium ${message.includes('Error') ? 'text-red-600' : 'text-green-600'}`}>
-              {message}
-            </p>
-          )}
-        </form>
-        <div className="text-center">
-          <Link href="/" className="text-sm font-medium text-blue-600 hover:text-blue-500">
-            ← Back to Leads
-          </Link>
-        </div>
+          <div
+            aria-hidden="true"
+            className="absolute right-[-4rem] top-24 h-56 w-56 rounded-full bg-sky-400/20 blur-3xl animate-float"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute bottom-[-5rem] left-[-3rem] h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl animate-float"
+          />
+
+          <div className="relative z-10 max-w-lg space-y-8 text-white">
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60">Built for crews</p>
+              <h2 className="text-4xl font-semibold tracking-tight">Fast access to leads that keep your team moving.</h2>
+              <p className="text-base leading-relaxed text-white/70">
+                ScoutLead gives contractors a cleaner way to spot the right jobs, act sooner, and stay booked without the noise.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 backdrop-blur">
+              <p className="text-sm leading-relaxed text-white/80">
+                “We went from chasing stale postings to calling on fresh work the same day. It’s the first lead feed our office actually trusts.”
+              </p>
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <p className="text-sm font-semibold text-white">Jordan M.</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-white/50">General Contractor</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4 text-sm text-white/70">
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                Premium lead flow
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                Passwordless login
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                Desktop and mobile ready
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
-    </div>
+    </main>
   )
 }

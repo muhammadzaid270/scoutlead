@@ -36,24 +36,61 @@ const featureCards = [
   },
 ]
 
+const socialProofCards = [
+  {
+    quote: 'ScoutLead keeps my crew busy with leads that actually convert. We stopped wasting mornings digging through city sites.',
+    name: 'Marcus R.',
+    role: 'Electrical Contractor',
+  },
+  {
+    quote: 'The clean feed and direct contact info save us hours every week. It feels built for people who need answers fast.',
+    name: 'Tanya L.',
+    role: 'General Contractor',
+  },
+  {
+    quote: 'We get to the right jobs first. That alone has made a real difference in our close rate.',
+    name: 'David P.',
+    role: 'HVAC Owner',
+  },
+]
+
+const faqItems = [
+  {
+    question: 'How quickly do new leads show up?',
+    answer: 'New permits are surfaced as soon as they are available, so your team can move before the market gets crowded.',
+  },
+  {
+    question: 'What kind of jobs does ScoutLead highlight?',
+    answer: 'The feed focuses on active construction opportunities with the details contractors need to decide fast.',
+  },
+  {
+    question: 'Can I focus on a specific trade?',
+    answer: 'Yes. You can narrow the feed to the trades and project types that match your crew and schedule.',
+  },
+  {
+    question: 'Is this built for mobile use?',
+    answer: 'Absolutely. The layout is responsive, so your team can review leads from the office, truck, or job site.',
+  },
+]
+
 export default function LandingPage() {
   return (
     <main className="min-h-screen font-sans text-slate-900 hero-mesh">
       <div className="relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl"
+          className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl animate-[float_6s_ease-in-out_infinite]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-6rem] top-24 h-72 w-72 rounded-full bg-sky-400/20 blur-3xl"
+          className="pointer-events-none absolute right-[-6rem] top-24 h-72 w-72 rounded-full bg-sky-400/20 blur-3xl animate-[float_6s_ease-in-out_infinite]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-[-6rem] left-[-8rem] h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"
+          className="pointer-events-none absolute bottom-[-6rem] left-[-8rem] h-72 w-72 rounded-full bg-blue-500/10 blur-3xl animate-[float_6s_ease-in-out_infinite]"
         />
 
-        <header className="sticky top-0 z-50 bg-white/80 px-6 py-4 backdrop-blur-md sm:px-8 border-b border-slate-200/70">
+        <header className="sticky top-0 z-50 bg-white/95 px-6 py-4 backdrop-blur-md sm:px-8 border-b border-gray-200/50">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
             <Link
               href="/"
@@ -132,7 +169,11 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200/80 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur">
+            <div className="relative rounded-3xl border border-slate-200/80 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -top-6 right-8 h-16 w-16 rounded-full bg-indigo-500/10 blur-2xl animate-[float_6s_ease-in-out_infinite]"
+              />
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Today</p>
                 <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
@@ -175,7 +216,7 @@ export default function LandingPage() {
 
         <section id="how-it-works" className="relative z-10 px-6 pb-20 sm:px-8 scroll-mt-24">
           <div className="mx-auto max-w-6xl">
-            <div className="mb-10 max-w-2xl space-y-3 animate-fade-in-up">
+            <div className="mb-10 max-w-2xl space-y-3 animate-[fade-up_1s_ease-out_both]">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">How it works</p>
               <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
                 From permit to pipeline in three steps.
@@ -206,7 +247,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="features" className="relative z-10 px-6 pb-24 sm:px-8 scroll-mt-24">
+        <section id="features" className="relative z-10 px-6 pb-16 sm:px-8 scroll-mt-24">
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div className="space-y-3">
@@ -237,6 +278,64 @@ export default function LandingPage() {
                   <h3 className="mt-5 text-lg font-semibold text-slate-900">{feature.title}</h3>
                   <p className="mt-3 text-sm text-slate-600">{feature.copy}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="social-proof" className="relative z-10 px-6 py-20 sm:px-8 scroll-mt-24">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 max-w-2xl space-y-3 animate-[fade-up_1s_ease-out_both]">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Social proof</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                Contractors use it to stay booked and stay ahead.
+              </h2>
+              <p className="text-sm text-slate-600 sm:text-base">
+                Simple, modern testimonials from teams that want faster visibility into the right jobs.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {socialProofCards.map((testimonial) => (
+                <article
+                  key={testimonial.name}
+                  className="rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-lg shadow-slate-200/40 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <p className="text-sm leading-relaxed text-slate-600">“{testimonial.quote}”</p>
+                  <div className="mt-6 border-t border-slate-200/70 pt-4">
+                    <p className="text-sm font-semibold text-slate-900">{testimonial.name}</p>
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">{testimonial.role}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="relative z-10 px-6 pb-24 sm:px-8 scroll-mt-24">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 max-w-2xl space-y-3 animate-[fade-up_1s_ease-out_both]">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">FAQ</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                Straight answers for busy crews.
+              </h2>
+              <p className="text-sm text-slate-600 sm:text-base">
+                No fluff, just the details contractors want before they ask for access.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {faqItems.map((item) => (
+                <details
+                  key={item.question}
+                  className="group rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-lg shadow-slate-200/30 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <summary className="cursor-pointer list-none text-base font-semibold text-slate-900 focus:outline-none">
+                    <span className="flex items-center justify-between gap-4">
+                      {item.question}
+                      <span className="text-slate-400 transition-transform duration-300 group-open:rotate-45">+</span>
+                    </span>
+                  </summary>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.answer}</p>
+                </details>
               ))}
             </div>
           </div>
