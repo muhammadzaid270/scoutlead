@@ -119,14 +119,17 @@ export default async function Home({
               </div>
               {isAuthenticated ? (
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-gray-200/60 bg-white/80 px-3 py-1.5 text-sm font-medium text-zinc-700 shadow-sm">
+                  <Link
+                    href="/settings"
+                    className="inline-flex items-center gap-2 rounded-full border border-gray-200/60 bg-white/80 px-3 py-1.5 text-sm font-medium text-zinc-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-200 hover:text-zinc-900"
+                  >
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 font-semibold">
                       {userInitial}
                     </span>
                     <span className="hidden md:inline" title={userEmail}>
                       {userEmailDisplay}
                     </span>
-                  </div>
+                  </Link>
                   <form action={signOut}>
                     <button
                       type="submit"
