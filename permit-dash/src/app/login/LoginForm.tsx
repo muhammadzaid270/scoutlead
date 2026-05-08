@@ -1,6 +1,7 @@
 'use client'
 
 import { Loader2, Lock, Mail } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import type { AuthFormState, OAuthRedirectState } from './actions'
@@ -158,6 +159,14 @@ export default function LoginForm({ defaultEmail }: LoginFormProps) {
               placeholder="Your password"
               className="block w-full rounded-2xl border border-gray-300 bg-white px-11 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:outline-none"
             />
+          </div>
+          <div className="flex items-center justify-end">
+            <Link
+              href="/forgot-password"
+              className="text-xs font-semibold text-slate-500 transition-colors duration-150 hover:text-slate-700"
+            >
+              Forgot your password?
+            </Link>
           </div>
         </div>
 
