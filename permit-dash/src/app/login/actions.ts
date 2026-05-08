@@ -51,6 +51,14 @@ export async function login(
     return { status: 'error', message: error.message }
   }
 
+  const cookieStore = await cookies()
+  cookieStore.set({
+    name: 'last_used_email',
+    value: email,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
+  })
+
   redirect('/dashboard')
 }
 

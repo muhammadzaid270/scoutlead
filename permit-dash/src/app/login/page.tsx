@@ -1,7 +1,11 @@
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import LoginForm from './LoginForm'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const cookieStore = await cookies()
+  const lastUsedEmail = cookieStore.get('last_used_email')?.value ?? ''
+
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="grid min-h-screen lg:grid-cols-[1.05fr_0.95fr]">
@@ -22,7 +26,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <LoginForm />
+            <LoginForm defaultEmail={lastUsedEmail} />
           </div>
         </section>
 
