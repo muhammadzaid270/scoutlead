@@ -1,5 +1,5 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { MapPin } from 'lucide-react'
+import { Building2, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -96,7 +96,7 @@ export default async function Home({
   }
 
   return (
-    <main className="min-h-screen p-8 font-sans app-surface">
+    <main className="min-h-screen p-6 sm:p-8 font-sans app-surface">
       <div className="max-w-7xl mx-auto">
 
         {/* Dashboard Header */}
@@ -146,12 +146,19 @@ export default async function Home({
 
         {/* Empty State */}
         {permits?.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-2xl border border-gray-200/60 shadow-sm">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No results found</h3>
-            <p className="text-zinc-500 mb-6">Try selecting a different trade or clear all filters.</p>
+          <div className="text-center py-16 sm:py-20 bg-white rounded-2xl border border-gray-200/60 shadow-sm">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
+              <Building2 className="h-6 w-6" />
+            </div>
+            <h3 className="mt-4 text-lg font-semibold tracking-tight text-zinc-900">
+              No active leads found for this trade
+            </h3>
+            <p className="mt-2 text-sm text-zinc-500">
+              Try clearing your filters or selecting a different trade to see new opportunities.
+            </p>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 transition-all duration-200 active:scale-95"
+              className="mt-6 inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 transition-all duration-200 active:scale-95"
             >
               Clear All Filters
             </Link>

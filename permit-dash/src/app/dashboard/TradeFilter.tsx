@@ -45,7 +45,7 @@ export default function TradeFilter({ initialTrade = 'All' }: TradeFilterProps) 
   }
 
   return (
-    <div className="flex items-center gap-3 border-t border-gray-200/60 pt-6">
+    <div className="sticky top-4 z-40 flex flex-wrap items-center gap-3 rounded-xl border border-gray-200/60 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md">
       <div className="flex items-center text-zinc-500 font-medium text-sm mr-2">
         <Filter className="w-4 h-4 mr-2" />
         Filters:

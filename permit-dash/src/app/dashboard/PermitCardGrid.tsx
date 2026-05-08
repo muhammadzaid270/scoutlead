@@ -20,26 +20,26 @@ const getTradeBadgeClass = (permitType?: string | null) => {
   const type = permitType?.toLowerCase() ?? ''
 
   if (type.includes('plumb')) {
-    return 'bg-blue-50 text-blue-700 border-blue-100'
+    return 'bg-blue-50 border-blue-100'
   }
 
   if (type.includes('mech') || type.includes('hvac')) {
-    return 'bg-orange-50 text-orange-700 border-orange-100'
+    return 'bg-orange-50 border-orange-100'
   }
 
   if (type.includes('build')) {
-    return 'bg-zinc-100 text-zinc-700 border-zinc-200/60'
+    return 'bg-zinc-100 border-zinc-200/60'
   }
 
   if (type.includes('elect')) {
-    return 'bg-indigo-50 text-indigo-700 border-indigo-100'
+    return 'bg-indigo-50 border-indigo-100'
   }
 
   if (type.includes('demo')) {
-    return 'bg-rose-50 text-rose-700 border-rose-100'
+    return 'bg-rose-50 border-rose-100'
   }
 
-  return 'bg-zinc-100 text-zinc-700 border-zinc-200/60'
+  return 'bg-zinc-100 border-zinc-200/60'
 }
 
 const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
@@ -74,7 +74,7 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {permits.map((permit, index) => {
           const sqftValue = getNumericValue(permit.total_new_add_sqft)
           const sqftDisplay = typeof sqftValue === 'number' && sqftValue > 0 ? formatNumber(sqftValue) : null
@@ -96,12 +96,12 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
                   handleOpen(permit)
                 }
               }}
-              className="bg-white rounded-2xl border border-gray-200/60 shadow-sm p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-indigo-200 flex flex-col group animate-fade-in-up cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="bg-white rounded-2xl border border-gray-200/60 shadow-sm p-4 sm:p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-indigo-200 flex flex-col group animate-fade-in-up cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="flex items-start justify-between gap-3 mb-4">
                 <span
-                  className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${tradeBadgeClass}`}
+                  className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border text-zinc-900 ${tradeBadgeClass}`}
                 >
                   {permit.permit_type || 'General'}
                 </span>
@@ -109,6 +109,12 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
                   <span className="text-xs text-zinc-500 flex items-center font-medium bg-zinc-100/70 px-2 py-1 rounded-md border border-zinc-200/60">
                     <Calendar className="w-3 h-3 mr-1" />
                     {issuedDate}
+                  </span>
+                  <span
+                    className="text-[11px] text-zinc-500 font-medium max-w-[140px] truncate"
+                    title={String(permit.permit_id)}
+                  >
+                    Permit #{permit.permit_id}
                   </span>
                   {daysBadge && (
                     <span className={`text-xs font-semibold px-2 py-1 rounded-md border ${daysBadge.className}`}>
@@ -126,24 +132,24 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
                   </span>
                 )}
                 <span
-                  className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${budgetBadge.className}`}
+                  className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border text-zinc-900 ${budgetBadge.className}`}
                 >
                   <DollarSign className="w-3 h-3 mr-1" />
                   {budgetBadge.label}
                 </span>
               </div>
 
-              <h3 className="text-sm text-zinc-900 mb-6 leading-relaxed flex-grow min-h-[4.5rem]">
+              <h3 className="text-sm text-zinc-700 mb-6 leading-relaxed flex-grow min-h-[3.5rem] sm:min-h-[4.5rem]">
                 {permit.description || 'No description provided.'}
               </h3>
 
               <div className="space-y-3 mt-auto border-t border-gray-100/80 pt-4">
-                <div className="flex items-start text-sm text-zinc-600">
+                <div className="flex items-start text-sm text-zinc-900 font-semibold">
                   <MapPin className="w-4 h-4 mr-2.5 text-zinc-400 shrink-0 mt-0.5" />
                   <span className="leading-tight">{addressLine || 'Address missing'}</span>
                 </div>
 
-                <div className="flex items-center text-sm text-zinc-600">
+                <div className="flex items-center text-sm text-zinc-500">
                   <Briefcase className="w-4 h-4 mr-2.5 text-zinc-400 shrink-0" />
                   <span className="font-medium">{permit.work_class || 'Standard'}</span>
                 </div>
