@@ -2,8 +2,8 @@
 
 import { Loader2, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useActionState, useEffect, useState } from 'react'
+import { useFormStatus } from 'react-dom'
 import type { AuthFormState, OAuthRedirectState } from './actions'
 import { login, signInWithGoogle, signup } from './actions'
 
@@ -100,9 +100,9 @@ type LoginFormProps = {
 
 export default function LoginForm({ defaultEmail }: LoginFormProps) {
   const [mode, setMode] = useState<AuthMode>('login')
-  const [loginState, loginAction] = useFormState(login, initialAuthState)
-  const [signupState, signupAction] = useFormState(signup, initialAuthState)
-  const [googleState, googleAction] = useFormState(signInWithGoogle, { status: 'idle' } as OAuthRedirectState)
+  const [loginState, loginAction] = useActionState(login, initialAuthState)
+  const [signupState, signupAction] = useActionState(signup, initialAuthState)
+  const [googleState, googleAction] = useActionState(signInWithGoogle, { status: 'idle' } as OAuthRedirectState)
   const activeState = mode === 'signup' ? signupState : loginState
 
   useEffect(() => {

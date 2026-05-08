@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Briefcase, Calendar, DollarSign, MapPin, Ruler, User, X } from 'lucide-react'
+import { Briefcase, Calendar, DollarSign, ExternalLink, MapPin, Ruler, User, X } from 'lucide-react'
 import PhoneRevealButton from './PhoneRevealButton'
 import {
   type Permit,
@@ -16,9 +16,19 @@ type PermitDetailPanelProps = {
   isOpen: boolean
   permit: Permit | null
   onClose: () => void
+  isRevealed: boolean
+  isLoading: boolean
+  onReveal: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const PermitDetailPanel = ({ isOpen, permit, onClose }: PermitDetailPanelProps) => {
+const PermitDetailPanel = ({
+  isOpen,
+  permit,
+  onClose,
+  isRevealed,
+  isLoading,
+  onReveal,
+}: PermitDetailPanelProps) => {
   useEffect(() => {
     if (!isOpen) {
       return
@@ -45,6 +55,10 @@ const PermitDetailPanel = ({ isOpen, permit, onClose }: PermitDetailPanelProps) 
   }
 
   const addressLine = [permit.address, permit.zip_code].filter(Boolean).join(' ')
+  const addressDisplay = isRevealed ? addressLine || 'Address missing' : 'Address hidden (Unlock to view)'
+  const addressClasses = isRevealed
+    ? 'text-zinc-900 font-semibold'
+    : 'text-zinc-400 select-none'
   const issuedDate = formatIssuedDate(permit.issued_at)
   const daysBadge = getDaysActiveBadge(permit.issued_at)
   const budgetBadge = getBudgetBadge(permit.estimated_cost)
@@ -105,9 +119,9 @@ const PermitDetailPanel = ({ isOpen, permit, onClose }: PermitDetailPanelProps) 
               <User className="h-4 w-4 text-zinc-400" />
               <span className="font-medium">{permit.contractor_name || 'Contractor unavailable'}</span>
             </div>
-            <div className="flex items-start gap-3 text-sm text-zinc-700">
+            <div className={`flex items-start gap-3 text-sm ${addressClasses}`}>
               <MapPin className="mt-0.5 h-4 w-4 text-zinc-400" />
-              <span>{addressLine || 'Address missing'}</span>
+              <span>{addressDisplay}</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-zinc-700">
               <Briefcase className="h-4 w-4 text-zinc-400" />
@@ -136,7 +150,25 @@ const PermitDetailPanel = ({ isOpen, permit, onClose }: PermitDetailPanelProps) 
           </div>
 
           <div className="border-t border-zinc-200/70 p-6">
-            <PhoneRevealButton phoneNumber={permit.contractor_phone} />
+            <div className="flex flex-col gap-3">
+              <PhoneRevealButton
+                phoneNumber={permit.contractor_phone}
+                isRevealed={isRevealed}
+                isLoading={isLoading}
+                onReveal={onReveal}
+              />
+              {isRevealed && permit.portal_link && (
+                <a
+                  href={permit.portal_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-200 px-4 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-50"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  View City Portal
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
