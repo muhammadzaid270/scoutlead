@@ -16,6 +16,32 @@ type PermitCardGridProps = {
   permits: Permit[] | null
 }
 
+const getTradeBadgeClass = (permitType?: string | null) => {
+  const type = permitType?.toLowerCase() ?? ''
+
+  if (type.includes('plumb')) {
+    return 'bg-blue-50 text-blue-700 border-blue-100'
+  }
+
+  if (type.includes('mech') || type.includes('hvac')) {
+    return 'bg-orange-50 text-orange-700 border-orange-100'
+  }
+
+  if (type.includes('build')) {
+    return 'bg-zinc-100 text-zinc-700 border-zinc-200/60'
+  }
+
+  if (type.includes('elect')) {
+    return 'bg-indigo-50 text-indigo-700 border-indigo-100'
+  }
+
+  if (type.includes('demo')) {
+    return 'bg-rose-50 text-rose-700 border-rose-100'
+  }
+
+  return 'bg-zinc-100 text-zinc-700 border-zinc-200/60'
+}
+
 const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
   const [activePermit, setActivePermit] = useState<Permit | null>(null)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
@@ -56,6 +82,7 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
           const daysBadge = getDaysActiveBadge(permit.issued_at)
           const budgetBadge = getBudgetBadge(permit.estimated_cost)
           const addressLine = [permit.address, permit.zip_code].filter(Boolean).join(' ')
+          const tradeBadgeClass = getTradeBadgeClass(permit.permit_type)
 
           return (
             <div
@@ -69,11 +96,13 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
                   handleOpen(permit)
                 }
               }}
-              className="bg-white rounded-2xl border border-gray-200/60 shadow-sm p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200/50 flex flex-col group animate-fade-in-up cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="bg-white rounded-2xl border border-gray-200/60 shadow-sm p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-indigo-200 flex flex-col group animate-fade-in-up cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="flex items-start justify-between gap-3 mb-4">
-                <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200/60">
+                <span
+                  className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${tradeBadgeClass}`}
+                >
                   {permit.permit_type || 'General'}
                 </span>
                 <div className="flex flex-col items-end gap-2">

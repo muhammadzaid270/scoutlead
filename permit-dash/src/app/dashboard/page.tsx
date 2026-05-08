@@ -64,6 +64,13 @@ export default async function Home({
   const supabase = await createSupabaseServerClient()
   const { data: { user } } = await supabase.auth.getUser()
   const isAuthenticated = Boolean(user)
+  const userEmail = user?.email ?? ''
+  const userInitial = userEmail ? userEmail[0].toUpperCase() : '?'
+  const userEmailDisplay = userEmail
+    ? userEmail.length > 24
+      ? `${userEmail.slice(0, 21)}...`
+      : userEmail
+    : 'Account'
 
   // 1. Start building the database query
   let query = supabase
@@ -111,14 +118,24 @@ export default async function Home({
                 Austin, TX
               </div>
               {isAuthenticated ? (
-                <form action={signOut}>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2 transition-all duration-200 active:scale-95"
-                  >
-                    Sign Out
-                  </button>
-                </form>
+                <div className="flex items-center gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-gray-200/60 bg-white/80 px-3 py-1.5 text-sm font-medium text-zinc-700 shadow-sm">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 font-semibold">
+                      {userInitial}
+                    </span>
+                    <span className="hidden md:inline" title={userEmail}>
+                      {userEmailDisplay}
+                    </span>
+                  </div>
+                  <form action={signOut}>
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2 transition-all duration-200 active:scale-95"
+                    >
+                      Sign Out
+                    </button>
+                  </form>
+                </div>
               ) : (
                 <Link
                   href="/login"

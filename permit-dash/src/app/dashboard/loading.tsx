@@ -8,7 +8,13 @@ export default function Loading() {
               <div className="h-8 w-64 bg-gray-200 rounded" />
               <div className="h-4 w-80 bg-gray-200 rounded" />
             </div>
-            <div className="h-9 w-32 bg-gray-200 rounded-lg" />
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 rounded-full border border-gray-200/60 bg-white/80 px-3 py-1.5">
+                <div className="h-8 w-8 rounded-full bg-gray-200" />
+                <div className="hidden md:block h-4 w-28 bg-gray-200 rounded" />
+              </div>
+              <div className="h-9 w-28 bg-gray-200 rounded-lg" />
+            </div>
           </div>
           <div className="flex items-center gap-3 border-t border-gray-200/60 pt-6">
             <div className="h-4 w-20 bg-gray-200 rounded" />

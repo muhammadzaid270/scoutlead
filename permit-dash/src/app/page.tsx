@@ -113,7 +113,7 @@ export default function LandingPage() {
               href="/login"
               className="inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-all duration-150 ease-in-out hover:-translate-y-1 hover:bg-indigo-500 hover:shadow-lg active:scale-95 active:bg-opacity-90"
             >
-              Login
+              Signup/Login
             </Link>
           </div>
         </header>
