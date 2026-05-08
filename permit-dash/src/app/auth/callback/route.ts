@@ -24,8 +24,14 @@ export async function GET(request: Request) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) return NextResponse.redirect(`${origin}${next}`)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      const providers = data.session?.user?.app_metadata?.providers ?? []
+      const usesGoogle = providers.includes('google')
+      const hasPassword = providers.includes('email')
+      const redirectPath = usesGoogle && !hasPassword ? '/setup-password' : next
+      return NextResponse.redirect(`${origin}${redirectPath}`)
+    }
   }
 
   return NextResponse.redirect(`${origin}/auth/auth-code-error`)

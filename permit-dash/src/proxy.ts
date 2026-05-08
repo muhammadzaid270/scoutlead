@@ -38,7 +38,11 @@ export async function proxy(request: NextRequest) {
     return redirectResponse
   }
 
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (
+    !user &&
+    (request.nextUrl.pathname.startsWith('/dashboard') ||
+      request.nextUrl.pathname.startsWith('/setup-password'))
+  ) {
     return redirectWithCookies('/login')
   }
 
@@ -50,5 +54,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login'],
+  matcher: ['/dashboard/:path*', '/setup-password', '/login'],
 }
