@@ -2,27 +2,16 @@
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies, headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-export type LoginFormState = {
+export type AuthFormState = {
   status: 'idle' | 'success' | 'error'
   message?: string
 }
 
-export async function sendMagicLinkAction(
-  _previousState: LoginFormState,
-  formData: FormData
-): Promise<LoginFormState> {
-  const email = String(formData.get('email') ?? '').trim()
-
-  if (!email) {
-    return {
-      status: 'error',
-      message: 'Enter the email address you want to use for ScoutLead.',
-    }
-  }
-
+async function createSupabaseServerClient() {
   const cookieStore = await cookies()
-  const supabase = createServerClient(
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -39,26 +28,64 @@ export async function sendMagicLinkAction(
       },
     }
   )
+}
 
+export async function login(
+  _previousState: AuthFormState,
+  formData: FormData
+): Promise<AuthFormState> {
+  const email = String(formData.get('email') ?? '').trim()
+  const password = String(formData.get('password') ?? '')
+
+  if (!email || !password) {
+    return {
+      status: 'error',
+      message: 'Enter your email and password to continue.',
+    }
+  }
+
+  const supabase = await createSupabaseServerClient()
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+  if (error) {
+    return { status: 'error', message: error.message }
+  }
+
+  redirect('/dashboard')
+}
+
+export async function signup(
+  _previousState: AuthFormState,
+  formData: FormData
+): Promise<AuthFormState> {
+  const email = String(formData.get('email') ?? '').trim()
+  const password = String(formData.get('password') ?? '')
+
+  if (!email || !password) {
+    return {
+      status: 'error',
+      message: 'Enter your email and password to create an account.',
+    }
+  }
+
+  const supabase = await createSupabaseServerClient()
   const origin = (await headers()).get('origin') ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
-  const { error } = await supabase.auth.signInWithOtp({
+  const { error } = await supabase.auth.signUp({
     email,
+    password,
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
     },
   })
 
   if (error) {
-    return {
-      status: 'error',
-      message: error.message,
-    }
+    return { status: 'error', message: error.message }
   }
 
   return {
     status: 'success',
-    message: 'Check your email for the magic link. It will bring you back to ScoutLead automatically.',
+    message: 'Check your email to confirm your account, then sign in to continue.',
   }
 }
 
@@ -72,24 +99,7 @@ export async function signInWithGoogle(
   _previousState: OAuthRedirectState,
   _formData: FormData
 ): Promise<OAuthRedirectState> {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          cookieStore.set({ name, value, ...options })
-        },
-        remove(name: string, options: CookieOptions) {
-          cookieStore.set({ name, value: '', ...options })
-        },
-      },
-    }
-  )
+  const supabase = await createSupabaseServerClient()
 
   const origin = (await headers()).get('origin') ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 

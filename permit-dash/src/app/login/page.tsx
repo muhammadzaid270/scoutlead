@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import LoginForm from './LoginForm'
-import { sendMagicLinkAction } from './actions'
 
 export default function LoginPage() {
   return (
@@ -18,12 +17,12 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Sign in to ScoutLead</h1>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  No passwords. Just a polished magic link straight to your inbox.
+                  Use Google or your email and password to get to the dashboard fast.
                 </p>
               </div>
             </div>
 
-            <LoginForm action={sendMagicLinkAction} />
+            <LoginForm />
           </div>
         </section>
 
@@ -65,7 +64,7 @@ export default function LoginPage() {
                 Premium lead flow
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                Passwordless login
+                Google + email login
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                 Desktop and mobile ready
