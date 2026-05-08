@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Briefcase, Calendar, DollarSign, ExternalLink, MapPin, Phone, Ruler } from 'lucide-react'
+import { Briefcase, Calendar, DollarSign, ExternalLink, MapPin, Ruler } from 'lucide-react'
 import PermitDetailPanel from './PermitDetailPanel'
+import PhoneRevealButton from './PhoneRevealButton'
 import {
   type Permit,
   formatIssuedDate,
@@ -155,19 +156,7 @@ const PermitCardGrid = ({ permits }: PermitCardGridProps) => {
                 </div>
 
                 <div className="flex gap-2 mt-4 pt-2">
-                  <a
-                    href={permit.contractor_phone ? `tel:${permit.contractor_phone}` : '#'}
-                    onClick={(event) => {
-                      handleActionClick(event)
-                      if (!permit.contractor_phone) {
-                        event.preventDefault()
-                      }
-                    }}
-                    className="flex-1 flex justify-center items-center text-sm font-bold text-white bg-green-600 hover:bg-green-700 p-2.5 rounded-lg transition-all duration-200 active:scale-95"
-                  >
-                    <Phone className="w-4 h-4 mr-2" />
-                    {permit.contractor_phone ? permit.contractor_phone : 'N/A'}
-                  </a>
+                  <PhoneRevealButton phoneNumber={permit.contractor_phone} />
 
                   {permit.portal_link && (
                     <a
