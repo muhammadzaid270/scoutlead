@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Briefcase, Calendar, DollarSign, MapPin, Phone, Ruler, User, X } from 'lucide-react'
+import { Briefcase, Calendar, DollarSign, MapPin, Ruler, User, X } from 'lucide-react'
+import PhoneRevealButton from './PhoneRevealButton'
 import {
   type Permit,
   formatIssuedDate,
@@ -135,20 +136,7 @@ const PermitDetailPanel = ({ isOpen, permit, onClose }: PermitDetailPanelProps) 
           </div>
 
           <div className="border-t border-zinc-200/70 p-6">
-            {permit.contractor_phone ? (
-              <a
-                href={`tel:${permit.contractor_phone}`}
-                className="flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-green-700"
-              >
-                <Phone className="h-4 w-4" />
-                Call {permit.contractor_phone}
-              </a>
-            ) : (
-              <div className="flex items-center justify-center gap-2 rounded-lg bg-green-100 px-4 py-3 text-sm font-semibold text-green-700">
-                <Phone className="h-4 w-4" />
-                Call Unavailable
-              </div>
-            )}
+            <PhoneRevealButton phoneNumber={permit.contractor_phone} />
           </div>
         </div>
       </div>

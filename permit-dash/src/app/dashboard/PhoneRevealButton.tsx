@@ -15,7 +15,9 @@ export default function PhoneRevealButton({ phoneNumber }: PhoneRevealButtonProp
   const normalizedPhone = phoneNumber?.trim() ?? ''
   const hasNumber = normalizedPhone.length > 0
 
-  const handleReveal = async () => {
+  const handleReveal = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
     if (isRevealed || isLoading || !hasNumber) {
       return
     }
@@ -40,6 +42,7 @@ export default function PhoneRevealButton({ phoneNumber }: PhoneRevealButtonProp
         {isRevealed && hasNumber ? (
           <a
             href={`tel:${normalizedPhone}`}
+            onClick={(event) => event.stopPropagation()}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:bg-green-700 active:scale-95"
           >
             {normalizedPhone}
