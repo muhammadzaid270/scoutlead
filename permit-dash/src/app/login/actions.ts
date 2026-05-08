@@ -61,3 +61,48 @@ export async function sendMagicLinkAction(
     message: 'Check your email for the magic link. It will bring you back to ScoutLead automatically.',
   }
 }
+
+export type OAuthRedirectState = {
+  status: 'idle' | 'redirect' | 'error'
+  url?: string | null
+  message?: string
+}
+
+export async function signInWithGoogle(
+  _previousState: OAuthRedirectState,
+  _formData: FormData
+): Promise<OAuthRedirectState> {
+  const cookieStore = await cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set({ name, value, ...options })
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.set({ name, value: '', ...options })
+        },
+      },
+    }
+  )
+
+  const origin = (await headers()).get('origin') ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+    },
+  })
+
+  if (error) {
+    return { status: 'error', message: error.message }
+  }
+
+  return { status: 'redirect', url: data?.url ?? null }
+}
