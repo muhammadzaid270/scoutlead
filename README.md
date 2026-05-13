@@ -24,3 +24,4 @@ AI‑powered lead generation app that helps you discover, enrich, and qualify pr
 - **AI Provider:** (e.g., OpenAI / Azure OpenAI / local LLM)  
 
 ## View the app
+View the site at [ScoutLead](https://www.scoutlead.app)
